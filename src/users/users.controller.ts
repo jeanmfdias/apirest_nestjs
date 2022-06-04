@@ -19,9 +19,9 @@ export class UsersController {
   ): Promise<any> {
     try {
       const user = await this.usersService.create(req);
-      return this.usersService.traitResultCreate(user);
+      return this.usersService.treatResultCreate(user);
     } catch (err) {
-      const result = await this.usersService.traitErrorCreate(err);
+      const result = await this.usersService.treatErrorCreate(err);
 
       res.status(HttpStatus.BAD_REQUEST);
       return result;
