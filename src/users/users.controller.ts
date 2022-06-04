@@ -1,4 +1,5 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get, Res, HttpStatus } from '@nestjs/common';
+import { Response } from 'express';
 import { CreateUserDto } from './dto/create_user.dto';
 import { UsersService } from './users.service';
 
@@ -12,16 +13,18 @@ export class UsersController {
   }
 
   @Post()
-  async create(@Body() req: CreateUserDto): Promise<any> {
+  async create(
+    @Res({ passthrough: true }) res: Response,
+    @Body() req: CreateUserDto
+  ): Promise<any> {
     try {
       const user = await this.usersService.create(req);
       return user;
     } catch (err) {
-      return {
-        statusCode: 400,
-        message: "create user error",
-        details: err
-      };
+      const result = await this.usersService.traitErrorCreate(err);
+
+      res.status(HttpStatus.BAD_REQUEST);
+      return result;
     }
   }
 }

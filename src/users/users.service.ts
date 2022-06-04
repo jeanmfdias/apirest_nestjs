@@ -50,4 +50,28 @@ export class UsersService {
       throw new BadRequestException(err);
     }
   }
+
+  traitErrorCreate(err: any): any {
+    let result = {
+      statusCode: 400,
+      message: "create user error"
+    };
+    let newResult;
+    
+    switch (err.code) {
+      case "23505":
+        let message = "email is duplicated"
+        result.message = message;
+        newResult = result;
+        break;
+      default:
+        newResult = {
+          statusCode: result.statusCode,
+          message: result.message,
+          details: err
+        }
+    }
+
+    return newResult;
+  }
 }
