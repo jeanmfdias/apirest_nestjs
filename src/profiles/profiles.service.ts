@@ -11,11 +11,25 @@ export class ProfilesService {
     private profilesRepository: Repository<Profile>
   ) {}
 
+  findOneBy(name: string): Promise<Profile> {
+    return this.profilesRepository.findOneBy({ name });
+  }
+
   create(body: CreateProfileDto): Promise<Profile> {
     const profile: Profile = new Profile();
 
     profile.name = body.name;
 
     return this.profilesRepository.save(profile);
+  }
+
+  async firstOrCreate(body: CreateProfileDto): Promise<Profile> {
+    const profile = await this.findOneBy(body.name);
+    
+    if (!profile) {
+      return this.create(body);
+    }
+    
+    return profile;
   }
 }

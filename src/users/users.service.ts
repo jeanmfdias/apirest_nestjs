@@ -35,7 +35,7 @@ export class UsersService {
     let profiles: Array<Profile> = [];
 
     for (const profile of body.profiles) {
-      let profileCreated = await this.profilesService.create({ name: profile });    
+      let profileCreated = await this.profilesService.firstOrCreate({ name: profile });
       profiles.push(profileCreated);
     } 
 
