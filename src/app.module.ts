@@ -5,6 +5,8 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { User } from './users/user.entity';
 import { UsersModule } from './users/users.module';
+import { ProfilesModule } from './profiles/profiles.module';
+import { Profile } from './profiles/profile.entity';
 
 @Module({
   imports: [
@@ -17,11 +19,12 @@ import { UsersModule } from './users/users.module';
       username: 'postgres',
       password: 'secret',
       database: 'apirest_nestjs',
-      entities: [User],
+      entities: [User, Profile],
       migrations: [],
       migrationsTableName: 'migrations',
       synchronize: true
-    })
+    }),
+    ProfilesModule
   ],
   controllers: [AppController],
   providers: [AppService],

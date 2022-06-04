@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, Index, CreateDateColumn, UpdateDateColumn, BeforeInsert } from "typeorm";
+import { Profile } from "src/profiles/profile.entity";
+import { Entity, Column, PrimaryGeneratedColumn, Index, CreateDateColumn, UpdateDateColumn, BeforeInsert, OneToMany, ManyToMany, JoinTable } from "typeorm";
 import { v4 } from 'uuid';
 
 @Entity()
@@ -24,6 +25,10 @@ export class User {
 
   @Column({ nullable: true })
   lastLogin: Date;
+
+  @ManyToMany(() => Profile)
+  @JoinTable()
+  profiles: Profile[];
 
   @BeforeInsert()
   addId() {
