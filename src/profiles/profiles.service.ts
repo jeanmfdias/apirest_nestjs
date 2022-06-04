@@ -11,6 +11,10 @@ export class ProfilesService {
     private profilesRepository: Repository<Profile>
   ) {}
 
+  findAll(): Promise<Profile[]> {
+    return this.profilesRepository.find();
+  }
+
   findOneBy(name: string): Promise<Profile> {
     return this.profilesRepository.findOneBy({ name });
   }
@@ -29,7 +33,7 @@ export class ProfilesService {
     if (!profile) {
       return this.create(body);
     }
-    
+
     return profile;
   }
 }
