@@ -19,7 +19,7 @@ export class UsersController {
   ): Promise<any> {
     try {
       const user = await this.usersService.create(req);
-      return user;
+      return this.usersService.traitResultCreate(user);
     } catch (err) {
       const result = await this.usersService.traitErrorCreate(err);
 

@@ -51,7 +51,7 @@ export class UsersService {
     }
   }
 
-  traitErrorCreate(err: any): any {
+  treatErrorCreate(err: any): any {
     let result = {
       statusCode: 400,
       message: "create user error"
@@ -60,7 +60,7 @@ export class UsersService {
     
     switch (err.code) {
       case "23505":
-        let message = "email is duplicated"
+        let message = "the email already exists"
         result.message = message;
         newResult = result;
         break;
@@ -73,5 +73,21 @@ export class UsersService {
     }
 
     return newResult;
+  }
+
+  async treatResultCreate(user: User): Promise<any> {
+    const token = null;
+    let result = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      created: user.createdAt,
+      modified: user.updatedAt,
+      last_login: user.lastLogin,
+      profiles: user.profiles,
+      token: token
+    };
+
+    return result;
   }
 }
