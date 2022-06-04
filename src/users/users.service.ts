@@ -1,5 +1,6 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { AuthService } from 'src/auth/auth.service';
 import { Profile } from 'src/profiles/profile.entity';
 import { ProfilesService } from 'src/profiles/profiles.service';
 import { Repository } from 'typeorm';
@@ -11,7 +12,9 @@ export class UsersService {
   constructor(
     @InjectRepository(User) 
     private usersRepository: Repository<User>,
-    private profilesService: ProfilesService
+    private profilesService: ProfilesService,
+    @Inject(forwardRef(() => AuthService))
+    private authServices: AuthService
   ) {}
 
   findAll(): Promise<User[]> {
@@ -76,7 +79,7 @@ export class UsersService {
   }
 
   async treatResultCreate(user: User): Promise<any> {
-    const token = null;
+    const token = await this.authServices.login(user);
     let result = {
       id: user.id,
       name: user.name,
@@ -85,7 +88,7 @@ export class UsersService {
       modified: user.updatedAt,
       last_login: user.lastLogin,
       profiles: user.profiles,
-      token: token
+      token: token.access_token
     };
 
     return result;
