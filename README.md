@@ -48,6 +48,8 @@ $ docker compose build --no-cache
 $ docker compose up
 ```
 
+Run at port 8888
+
 ## License
 
 Nest is [MIT licensed](LICENSE).

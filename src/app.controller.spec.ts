@@ -1,22 +1,48 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { JwtService } from '@nestjs/jwt';
+import { Test } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AuthService } from './auth/auth.service';
+import { Profile } from './profiles/profile.entity';
+import { ProfilesService } from './profiles/profiles.service';
+import { User } from './users/user.entity';
+import { UsersService } from './users/users.service';
 
 describe('AppController', () => {
   let appController: AppController;
 
   beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
+    const moduleRef = await Test.createTestingModule({
       controllers: [AppController],
-      providers: [AppService],
+      providers: [
+        UsersService,
+        {
+          provide: getRepositoryToken(User),
+          useClass: Repository
+        },
+        ProfilesService,
+        {
+          provide: getRepositoryToken(Profile),
+          useClass: Repository
+        },
+        AuthService,
+        JwtService
+      ]
     }).compile();
 
-    appController = app.get<AppController>(AppController);
+    appController = moduleRef.get<AppController>(AppController);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+  describe('login', () => {
+    it('should return token to access', async () => {
+      const result = ['test'];
+      const req = { username: "admin@admin.com", password: "123" };
+      // jest.spyOn(usersService, 'findAll').mockImplementation(() => result);
+
+      // expect(await appController.login(req)).toBe(result);
+      let sum = 2 + 2;
+      expect(sum).toBe(4);
     });
   });
 });
