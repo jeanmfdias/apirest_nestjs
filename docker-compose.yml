@@ -9,3 +9,11 @@ services:
       - 5432:5432
     volumes:
       - ./docker/data:/var/lib/postgresql/data
+  
+  web:
+    image: nestjs
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - 8888:3000
