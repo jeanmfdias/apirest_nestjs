@@ -15,6 +15,8 @@ export class AppController {
   async login(@Request() req) {
     // return req.user;
     // return this.authService.login(req.user);
-    return this.userService.treatResultCreate(req.user);
+    const result = await this.userService.treatResultCreate(req.user);
+    await this.userService.updateLastLogin(req.user);
+    return result;
   }
 }

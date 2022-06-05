@@ -93,4 +93,10 @@ export class UsersService {
 
     return result;
   }
+
+  async updateLastLogin(user: User): Promise<User> {
+    user.lastLogin = new Date();
+    this.usersRepository.save(user);
+    return user;
+  }
 }
