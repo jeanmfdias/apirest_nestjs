@@ -11,6 +11,7 @@ import { UsersService } from './users/users.service';
 
 describe('AppController', () => {
   let appController: AppController;
+  let usersService: UsersService;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -32,17 +33,19 @@ describe('AppController', () => {
     }).compile();
 
     appController = moduleRef.get<AppController>(AppController);
+    usersService = moduleRef.get<UsersService>(UsersService);
   });
 
   describe('login', () => {
     it('should return token to access', async () => {
-      const result = ['test'];
       const req = { username: "admin@admin.com", password: "123" };
-      // jest.spyOn(usersService, 'findAll').mockImplementation(() => result);
+      const result = { token: 1234 };
+      const resultUser: User = new User;
 
-      // expect(await appController.login(req)).toBe(result);
-      let sum = 2 + 2;
-      expect(sum).toBe(4);
+      jest.spyOn(usersService, 'treatResultCreate').mockImplementation(async () => result);
+      jest.spyOn(usersService, 'updateLastLogin').mockImplementation(async () => resultUser);
+
+      expect(await appController.login(req)).toBe(result);
     });
   });
 });
