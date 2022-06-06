@@ -46,6 +46,7 @@ export class UsersService {
     user.password = body.password;
     user.email = body.email;
     user.profiles = profiles;
+    user.lastLogin = new Date();
 
     try {
       return this.usersRepository.save(user);
