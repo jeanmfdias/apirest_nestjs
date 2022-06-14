@@ -18,7 +18,7 @@ Ao executar o projeto localmente alterar o parametro de conexão com o banco de 
 
 - [ ] Adicionar .env
 - [ ] Criptografar a senha
-- [ ] Ordenar o resultados das listagens
+- [x] Ordenar o resultados das listagens
 - [ ] Refatorar os testes unitários (UsersService, AppController)
 - [ ] Finalizar os testes unitários (UsersController, ProfilesService, ProfilesController, AuthService)
 - [ ] Adicionar Swagger API Doc 
