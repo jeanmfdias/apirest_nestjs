@@ -12,7 +12,11 @@ export class ProfilesService {
   ) {}
 
   findAll(): Promise<Profile[]> {
-    return this.profilesRepository.find();
+    return this.profilesRepository.find({
+      order: {
+        name: 'asc'
+      }
+    });
   }
 
   findOneBy(name: string): Promise<Profile> {

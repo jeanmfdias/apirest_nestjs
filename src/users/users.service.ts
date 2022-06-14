@@ -21,6 +21,9 @@ export class UsersService {
     return this.usersRepository.find({
       relations: {
         profiles: true
+      },
+      order: {
+        email: 'asc'
       }
     });
   }
