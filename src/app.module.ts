@@ -7,8 +7,8 @@ import { User } from './users/user.entity';
 import { UsersModule } from './users/users.module';
 import { ProfilesModule } from './profiles/profiles.module';
 import { Profile } from './profiles/profile.entity';
-import { ConfigModule } from '@nestjs/config';
-import { getEnvPath } from './env.helper';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { getEnvPath } from './helpers/env.helper';
 
 const envFilePath: string = getEnvPath(`${__dirname}`);
 
@@ -20,17 +20,20 @@ const envFilePath: string = getEnvPath(`${__dirname}`);
     }),
     AuthModule, 
     UsersModule,
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: '127.0.0.1',
-      port: 5432,
-      username: 'postgres',
-      password: 'secret',
-      database: 'apirest_nestjs',
-      entities: [User, Profile],
-      migrations: [],
-      migrationsTableName: 'migrations',
-      synchronize: true
+    TypeOrmModule.forRootAsync({
+      useFactory: async (config: ConfigService) => ({
+        type: 'postgres',
+        host: config.get<string>('DB_HOST'),
+        port: config.get<number>('DB_PORT'),
+        username: config.get<string>('DB_USERNAME'),
+        password: config.get<string>('DB_PASSWORD'),
+        database: config.get<string>('DB_NAME'),
+        entities: [User, Profile],
+        migrations: [],
+        migrationsTableName: 'migrations',
+        synchronize: true
+      }),
+      inject: [ConfigService]
     }),
     ProfilesModule
   ],

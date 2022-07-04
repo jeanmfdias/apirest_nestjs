@@ -16,7 +16,7 @@ Ao executar o projeto localmente alterar o parametro de conexão com o banco de 
 
 ## Next steps
 
-- [ ] Adicionar .env
+- [x] Adicionar .env
 - [ ] Criptografar a senha
 - [x] Ordenar o resultados das listagens
 - [ ] Refatorar os testes unitários (UsersService, AppController)
