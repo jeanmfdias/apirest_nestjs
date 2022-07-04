@@ -7,14 +7,22 @@ import { User } from './users/user.entity';
 import { UsersModule } from './users/users.module';
 import { ProfilesModule } from './profiles/profiles.module';
 import { Profile } from './profiles/profile.entity';
+import { ConfigModule } from '@nestjs/config';
+import { getEnvPath } from './env.helper';
+
+const envFilePath: string = getEnvPath(`${__dirname}`);
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath,
+      isGlobal: true
+    }),
     AuthModule, 
     UsersModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'pg',
+      host: '127.0.0.1',
       port: 5432,
       username: 'postgres',
       password: 'secret',
