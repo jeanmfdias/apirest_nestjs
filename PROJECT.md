@@ -12,8 +12,6 @@ POST /profiles
 
 POST /auth/login
 
-Ao executar o projeto localmente alterar o parametro de conexão com o banco de dados Postgres para **localhost**. Quando utilizar com o Docker alterar para **pg**. No arquivo **src/app.module.ts**.
-
 ## Next steps
 
 - [x] Adicionar .env
