@@ -15,7 +15,7 @@ POST /auth/login
 ## Next steps
 
 - [x] Adicionar .env
-- [ ] Criptografar a senha
+- [x] Criptografar a senha
 - [x] Ordenar o resultados das listagens
 - [ ] Refatorar os testes unitários (UsersService, AppController)
 - [ ] Finalizar os testes unitários (UsersController, ProfilesService, ProfilesController, AuthService)

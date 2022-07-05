@@ -6,6 +6,7 @@ import { ProfilesService } from 'src/profiles/profiles.service';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create_user.dto';
 import { User } from './user.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -46,7 +47,7 @@ export class UsersService {
     } 
 
     user.name = body.name;
-    user.password = body.password;
+    user.password = await bcrypt.hash(body.password, 10);
     user.email = body.email;
     user.profiles = profiles;
     user.lastLogin = new Date();
